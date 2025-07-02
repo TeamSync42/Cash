@@ -1,3 +1,7 @@
+.cache/
+compile_commands.json
+cash
+
 # Prerequisites
 *.d
 
