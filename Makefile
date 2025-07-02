@@ -6,17 +6,17 @@
 #    By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02 11:03:00 by smamalig          #+#    #+#              #
-#    Updated: 2025/07/02 14:44:25 by smamalig         ###   ########.fr        #
+#    Updated: 2025/07/02 16:55:03 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cash
 CC			= cc
-CFLAGS		= -Wall -Wextra -MMD -MP -std=c89
+CFLAGS		= -Wall -Wextra -MMD -MP -std=c99
 SRC_DIR		= src
 OBJ_DIR		= obj
 
-SRC_ARGS	:= arguments/init.c
+SRC_ARGS	= arguments/init.c arguments/add.c arguments/find.c arguments/get.c
 SRC_FILES	:= $(SRC_ARGS) main.c
 
 SRCS		:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))

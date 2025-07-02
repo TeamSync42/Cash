@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 11:25:13 by smamalig          #+#    #+#             */
-/*   Updated: 2025/07/02 15:34:12 by smamalig         ###   ########.fr       */
+/*   Created: 2025/07/02 15:17:53 by smamalig          #+#    #+#             */
+/*   Updated: 2025/07/02 15:37:45 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "arguments.h"
-#include "cash.h"
 
-int	main(int argc, char **argv, char **envp)
+_Bool	arguments_is_set(t_arguments *args, const char *name)
 {
-	t_cash	cash;
+	const t_argument	*arg = arguments_find(args, name);
 
-	arguments_init(&cash.args, argc, argv);
-	ft_printf("verbose set?: %i\n", arguments_is_set(&cash.args, "verbose"));
-	(void)envp;
-	return (0);
+	if (!arg)
+		return (0);
+	return (arg->is_set);
+}
+
+char	*arguments_get(t_arguments *args, const char *name)
+{
+	const t_argument	*arg = arguments_find(args, name);
+
+	if (!arg)
+		return (NULL);
+	return (arg->value);
 }
