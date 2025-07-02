@@ -6,13 +6,13 @@
 #    By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02 11:03:00 by smamalig          #+#    #+#              #
-#    Updated: 2025/07/02 12:16:22 by smamalig         ###   ########.fr        #
+#    Updated: 2025/07/02 14:44:25 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cash
 CC			= cc
-CFLAGS		= -Wall -Wextra -MMD -MP
+CFLAGS		= -Wall -Wextra -MMD -MP -std=c89
 SRC_DIR		= src
 OBJ_DIR		= obj
 
