@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get.c                                              :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 15:17:53 by smamalig          #+#    #+#             */
-/*   Updated: 2025/07/02 20:33:39 by smamalig         ###   ########.fr       */
+/*   Created: 2025/07/03 22:25:58 by smamalig          #+#    #+#             */
+/*   Updated: 2025/07/09 18:49:40 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "arguments.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-_Bool	arguments_is_set(t_arguments *args, const char *name)
-{
-	auto const t_argument * arg = arguments_find(args, name);
-	if (!arg)
-		return (0);
-	return (arg->is_set);
-}
+#include "lexer.h"
+#include "libft.h"
 
-char	*arguments_get(t_arguments *args, const char *name)
+typedef struct s_parser
 {
-	auto const t_argument * arg = arguments_find(args, name);
-	if (!arg)
-		return (NULL);
-	return (arg->value);
-}
+	t_lexer	*lexer;
+}	t_parser;
+
+t_result	parser_init(t_parser *parser, t_lexer *lexer);
+t_result	parser_parse(t_parser *parser, char *line);
+
+#endif

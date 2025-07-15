@@ -6,7 +6,7 @@
 #    By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02 11:03:00 by smamalig          #+#    #+#              #
-#    Updated: 2025/07/02 16:55:03 by smamalig         ###   ########.fr        #
+#    Updated: 2025/07/09 18:04:33 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 
 SRC_ARGS	= arguments/init.c arguments/add.c arguments/find.c arguments/get.c
-SRC_FILES	:= $(SRC_ARGS) main.c
+SRC_LEXER	= lexer/init.c
+SRC_PARSER	= parser/init.c parser/parse.c
+SRC_FILES	:= $(SRC_ARGS) $(SRC_LEXER) $(SRC_PARSER) main.c
 
 SRCS		:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS		:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
@@ -33,33 +35,33 @@ MAGENTA		= \e[35m
 CYAN		= \e[36m
 RESET		= \e[m
 
-LIBFT		= libft
 LIBFT_FLAGS	= -Llibft -lft
 LIBFT_DIR	= ./libft
 
-LDFLAGS		= $(LIBFT_FLAGS)
+LDFLAGS		= $(LIBFT_FLAGS) -lreadline
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -Wpedantic -Wpacked -O0 -g3
+	CFLAGS += -O0 -g3 -D_DEBUG \
+			  -Wpedantic -Wpacked -Wstrict-prototypes -Wshadow \
+			  -Wconversion -Wmissing-prototypes -Wmissing-declarations \
+			  -Wold-style-definition -fsanitize=address -fsanitize=undefined
 else
-	CFLAGS += -Werror -ffast-math -O3
+	CFLAGS += -O3 -DNDEBUG -Werror -march=native -flto
 endif
 
 all: $(NAME)
 
 bonus: $(NAME)
 
--include $(DEPS)
-
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT_DIR)/libft.a $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+$(LIBFT_DIR)/libft.a:
+	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
 clean:
 	@printf "$(BLUE)%s$(RESET): $(RED)Removing$(RESET) object files\n" $(NAME)
@@ -74,5 +76,7 @@ fclean: clean
 re: fclean
 	@$(MAKE) all --no-print-directory
 
-.PHONY: all clean fclean re bonus $(LIBFT)
+-include $(DEPS)
+
+.PHONY: all clean fclean re bonus
 

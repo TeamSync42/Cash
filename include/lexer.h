@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get.c                                              :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 15:17:53 by smamalig          #+#    #+#             */
-/*   Updated: 2025/07/02 20:33:39 by smamalig         ###   ########.fr       */
+/*   Created: 2025/07/03 22:25:32 by smamalig          #+#    #+#             */
+/*   Updated: 2025/07/09 18:49:40 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "arguments.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-_Bool	arguments_is_set(t_arguments *args, const char *name)
-{
-	auto const t_argument * arg = arguments_find(args, name);
-	if (!arg)
-		return (0);
-	return (arg->is_set);
-}
+#include "libft.h"
 
-char	*arguments_get(t_arguments *args, const char *name)
+typedef struct s_lexer
 {
-	auto const t_argument * arg = arguments_find(args, name);
-	if (!arg)
-		return (NULL);
-	return (arg->value);
-}
+	char	*line;
+
+}	t_lexer;
+
+t_result	lexer_init(t_lexer *lexer);
+t_result	lexer_lex(t_lexer *lexer, char *line);
+
+#endif
