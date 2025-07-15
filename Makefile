@@ -6,7 +6,7 @@
 #    By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02 11:03:00 by smamalig          #+#    #+#              #
-#    Updated: 2025/07/09 18:04:33 by smamalig         ###   ########.fr        #
+#    Updated: 2025/07/15 11:04:15 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 
 SRC_ARGS	= arguments/init.c arguments/add.c arguments/find.c arguments/get.c
-SRC_LEXER	= lexer/init.c
+SRC_LEXER	= lexer/init.c lexer/lex.c
 SRC_PARSER	= parser/init.c parser/parse.c
 SRC_FILES	:= $(SRC_ARGS) $(SRC_LEXER) $(SRC_PARSER) main.c
 
