@@ -58,7 +58,8 @@ else ifeq ($(MODE), sanitize)
 endif
 
 DS_FILES		= ds/hash_table_create.c ds/hash_table_delete.c ds/hash_table_destroy.c \
-					ds/hash_table_insert.c ds/hash_table_reset.c ds/hash_table_search.c
+					ds/hash_table_insert.c ds/hash_table_reset.c ds/hash_table_search.c \
+					ds/internal/hash_table_resize.c
 SRC_FILES		= main.c $(DS_FILES)
 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
