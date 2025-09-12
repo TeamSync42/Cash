@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/12 17:07:23 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/12 17:15:08 by rel-qoqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,13 +48,13 @@ ifeq ($(MODE), release)
 else ifeq ($(MODE), debug)
 	C_FLAGS += $(C_DEBUG_FLAGS)
 	CXX_FLAGS += $(CXX_DEBUG_FLAGS)
-	NAME += _debug
-	OBJ_DIR += _debug
+	NAME = minishell_debug
+	OBJ_DIR = obj_debug
 else ifeq ($(MODE), sanitize)
 	C_FLAGS += $(C_DEBUG_FLAGS) -fsanitize=address
 	CXX_FLAGS += $(CXX_DEBUG_FLAGS) -fsanitize=address
-	NAME += _sanitize
-	OBJ_DIR += _sanitize
+	NAME = minishell_sanitize
+	OBJ_DIR = obj_sanitize
 endif
 
 SRC_FILES		= main.c
@@ -88,11 +88,12 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(DEP_DIR)
+	@rm -rf $(OBJ_DIR)*
 	$(MAKE) -C $(LIBS_DIR)/libft clean
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME)*
 	$(MAKE) -C $(LIBS_DIR)/libft fclean
 
 re: fclean all
