@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/12 15:10:26 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/12 17:07:23 by rel-qoqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ C_DEBUG_FLAGS		= -Og -g3 -DDEBUG -Wshadow -Wconversion -Wstrict-prototypes \
 						-Wundef -Wcast-align -Wcast-qual -Wwrite-strings -Wuninitialized \
 						-Wdouble-promotion -Wvla -Wnull-dereference -Wold-style-definition -Wpadded
 C_RELEASE_FLAGS		= -O3 -march=native -funroll-loops -fomit-frame-pointer -DNDEBUG
-CXX_FLAGS			= -std=c++17 Wall -Wextra -Werror -pedantic
+CXX_FLAGS			= -std=c++17 -Wall -Wextra -Werror -pedantic
 CXX_RELEASE_FLAGS	= -O3 -flto -march=native -funroll-loops -fomit-frame-pointer -DNDEBUG
 CXX_DEBUG_FLAGS		= -Og -g3 -DDEBUG
 
@@ -80,9 +80,8 @@ $(LIBFT_A):
 endif
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(@D)
-	$(CC) $(C_FLAGS) -c $< -o $@
-
+	@mkdir -p $(@D) $(DEP_DIR)
+	$(CC) $(C_FLAGS) -c $< -o $@ -MF $(DEP_DIR)/$(*F).d
 
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 	@mkdir -p $(@D)
