@@ -108,7 +108,19 @@ norm:
 	@norminette $(INC_DIR)
 	@norminette $(SRC_DIR)
 
-.PHONY: all clean fclean re debug sanitize norm
+tests:
+	@echo "OK"
+
+test:
+	@if [ -n "$(FILTER)" ]; then \
+  		echo "Running tests matching: $(FILTER)"; \
+  	else \
+		echo "Please specify FILTER=pattern"; \
+		echo "Example: make test FILTER='*lexer*'"; \
+		exit 42; \
+	fi
+
+.PHONY: all clean fclean re debug sanitize norm tests test
 
 -include $(DEPS)
 
