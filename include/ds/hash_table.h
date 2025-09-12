@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:23:57 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/12 17:30:22 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:42:11 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define TOMBSTONE ((char *) -1)
 
 typedef struct s_hash_entry {
-	char	*command_name;
+	char	*cmd_name;
 	char	*absolute_path;
 	size_t	use_count;
 }	t_hash_entry;
