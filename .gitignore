@@ -36,4 +36,5 @@ dkms.conf
 *.dwo
 .idea/
 .vscode/
+.cache/
 minishell*
