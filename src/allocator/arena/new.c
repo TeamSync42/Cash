@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:58:31 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 17:02:16 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:25:03 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static t_arena	*get_stack_arena(t_allocator *alc)
 	return (NULL);
 }
 
-t_arena_id	allocator_arena_new(t_allocator *alc)
+t_arena	*allocator_arena_new(t_allocator *alc)
 {
 	t_arena	*arena;
 
 	arena = get_stack_arena(alc);
 	if (arena)
-		return (arena->id);
+		return (arena);
 	arena = allocator_arena_create(alc);
 	if (!arena)
 		return (0);
@@ -44,5 +44,5 @@ t_arena_id	allocator_arena_new(t_allocator *alc)
 	arena->used = 0;
 	arena->next = alc->arenas;
 	alc->arenas = arena;
-	return (arena->id);
+	return (arena);
 }

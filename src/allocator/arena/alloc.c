@@ -5,27 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 14:10:44 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 18:23:13 by smamalig         ###   ########.fr       */
+/*   Created: 2025/09/13 17:44:54 by smamalig          #+#    #+#             */
+/*   Updated: 2025/09/13 18:31:13 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "allocator/allocator.h"
 #include "allocator/allocator_internal.h"
-#include <stdlib.h>
 
-t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena *arena)
+t_allocation	allocator_arena_alloc(
+	t_allocator *alc, t_arena *arena, size_t size)
 {
 	t_allocation	alloc;
+	t_arena			*temp;
 
-	if (arena)
-		return (allocator_arena_alloc(alc, arena, size));
-	if (size <= MAX_SLAB_SIZE)
-		return (allocator_slab_alloc(alc, size));
+	alloc.kind = ALLOC_ARENA;
+	alloc.parent_id = arena->id;
 	alloc.size = size;
-	alloc.kind = ALLOC_ALLOC;
-	alloc.data = malloc(size);
-	alloc.parent_id = 0;
-	alloc.region = NULL;
+	alloc.region = arena;
+	alloc.data = NULL;
+	if (arena->used + size > ARENA_CAPACITY)
+	{
+		temp = arena->next;
+		arena->next = allocator_arena_create(alc);
+		if (!arena->next)
+			return (alloc);
+		arena->next->next = temp;
+		return (allocator_arena_alloc(alc, arena->next, size));
+	}
+	alloc.data = arena->data + arena->used;
+	arena->used += size;
 	return (alloc);
 }

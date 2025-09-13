@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 17:07:08 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:47:05 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# define STACK_ARENAS 32
-# define STACK_SLABS 12
+# ifndef STACK_ARENAS
+#  define STACK_ARENAS 32
+# endif
+# ifndef STACK_SLABS
+#  define STACK_SLABS 12
+# endif
 # define MAX_SLAB_SIZE 512
 # define ARENA_CAPACITY 4076 // 4096 - 12 - 8
-# define SLAB_CAPACITY 4078 // 4096 - 10 - 8
+# define SLAB_CAPACITY 4076 // 4096 - 10 - 8
 
 typedef uint16_t	t_arena_id;
 
@@ -56,6 +60,7 @@ typedef struct s_slab_meta {
 typedef struct s_slab_region {
 	struct s_slab_region	*next;
 	uint16_t				id;
+	uint16_t				used;
 	char					data[SLAB_CAPACITY];
 }	t_slab_region;
 
@@ -72,10 +77,10 @@ typedef struct s_allocator {
 void			allocator_init(t_allocator *alc);
 void			allocator_destroy(t_allocator *alc);
 
-t_arena_id		allocator_arena_new(t_allocator *alc);
+t_arena			*allocator_arena_new(t_allocator *alc);
 void			allocator_bulk_free(t_allocator *alc, t_arena_id id);
 
-t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena_id id);
+t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena *arena);
 void			allocator_free(t_allocator *alc, t_allocation alloc);
 
 #endif // ALLOCATOR_H
