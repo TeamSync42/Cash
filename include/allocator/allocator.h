@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 18:47:05 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:55:59 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # endif
 # define MAX_SLAB_SIZE 512
 # define ARENA_CAPACITY 4076 // 4096 - 12 - 8
-# define SLAB_CAPACITY 4076 // 4096 - 10 - 8
+# define SLAB_CAPACITY 4074 // 4096 - 10 - 8
 
 typedef uint16_t	t_arena_id;
 
@@ -61,6 +61,7 @@ typedef struct s_slab_region {
 	struct s_slab_region	*next;
 	uint16_t				id;
 	uint16_t				used;
+	uint16_t				max_free;
 	char					data[SLAB_CAPACITY];
 }	t_slab_region;
 

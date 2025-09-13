@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:44:54 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 18:31:13 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:01:16 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ t_allocation	allocator_arena_alloc(
 		temp = arena->next;
 		arena->next = allocator_arena_create(alc);
 		if (!arena->next)
+		{
+			arena->next = temp;
 			return (alloc);
+		}
 		arena->next->next = temp;
 		return (allocator_arena_alloc(alc, arena->next, size));
 	}
