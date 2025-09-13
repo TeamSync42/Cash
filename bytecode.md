@@ -14,7 +14,7 @@ Arguments follow immediately and are encoded in **little endian** unless noted.
 | `OP_EXEC`    | 0x02  | `[opcode]`                              | Execute current command with collected args. |
 | `OP_ARG`     | 0x03  | `[opcode][len:1][bytes:len]`            | Append argument string. |
 | `OP_FILENAME`| 0x04  | `[opcode][len:1][bytes:len]`            | Provide filename (for redirections). |
-| `OP_PIPE`    | 0x05  | `[opcode]`                              | Start a new command in a pipeline (`|`). |
+| `OP_PIPE`    | 0x05  | `[opcode]`                              | Start a new command in a pipeline (`\|`). |
 | `OP_BACKGROUND` | 0x06 | `[opcode]`                            | Run preceding pipeline in background (`&`). |
 | `OP_REDIR_OUT` | 0x07 | `[opcode][fd:4]`                       | Redirect output of previous command to file. |
 | `OP_REDIR_IN`  | 0x08 | `[opcode][fd:4]`                       | Redirect input of previous command from file. |
@@ -29,7 +29,7 @@ Arguments follow immediately and are encoded in **little endian** unless noted.
 
 - **Strings**: encoded as `[len:1][bytes:len]`.  
 - **Integers**: 4-byte little endian.  
-- `OP_COMMAND` uses `argc` as an integer, followed by `OP_ARG`
+- `OP_COMMAND` uses `argc` as an integer, followed by `argc` `OP_ARG` instructions.
 - Redirections (`OP_REDIR_IN/OUT`) require a preceding `OP_FILENAME`.
 
 ---
