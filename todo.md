@@ -29,10 +29,9 @@
 - [ ] Tokenization, quoting, and expansions (order matters)
     - [ ] Tokenization with quotes/backslash rules
     - [ ] Tilde expansion (only in assignment-value and unquoted words where permitted)
-    - [ ] Parameter expansion: \${var}, \${var:-word}, \${var:=word}, \${var:?word}, \${var:+word}, \${#var},
-      \${var%…}, \$
-      {var%%…}, \${var#…}, \${var##…}
-    - [ ] Command substitution: $(command) and `command`
+    - [ ] Parameter expansion: \$\{var\}, \$\{var:-word\}, \$\{var:=word\}, \$\{var:?word\},
+        \$\{var:+word\}, \$\{#var\}, \$\{var%…\}, \$\{var%%…\}, \$\{var#…\}, \${var##…\}
+    - [ ] Command substitution: $(command) and \`command\`
         - [ ] Properly handle nested $(…) and backticks with escaping
         - [ ] Newline trimming from output per POSIX
     - [ ] Arithmetic expansion: $(( expression )) (C-like, locale-independent, intmax_t)

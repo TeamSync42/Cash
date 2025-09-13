@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/12 17:39:06 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/13 14:45:30 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,8 @@ endif
 DS_FILES		= ds/hash_table_create.c ds/hash_table_delete.c ds/hash_table_destroy.c \
 					ds/hash_table_insert.c ds/hash_table_reset.c ds/hash_table_search.c \
 					ds/internal/hash_table_resize.c
-SRC_FILES		= main.c $(DS_FILES)
+ALLOCATOR_FILES	= allocator/init.c allocator/destroy.c
+SRC_FILES		= main.c $(DS_FILES) $(ALLOCATOR_FILES)
 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))

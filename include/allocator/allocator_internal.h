@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:55 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 10:08:52 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/13 14:54:27 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 # include "allocator.h"
 
-t_arena			*allocator_arena_new(t_allocator *alc, size_t capacity);
-t_slab_region	*allocator_slab_new(t_allocator *allocator, size_t block_size,
-					size_t num_blocks);
+t_arena			*allocator_arena_create(t_allocator *alc);
+void			allocator_arena_destroy(t_arena *arena);
+
+t_allocation	allocator_arena_alloc(t_arena *arena, size_t size);
+
+t_slab_region	*allocator_slab_create(t_allocator *alc);
+void			allocator_slab_destroy(t_slab_region *slab);
+
 t_allocation	allocator_slab_alloc(t_slab_region *slab);
 void			allocator_slab_free(t_allocation alloc);
 
-#endif
+#endif // ALLOCATOR_INTERNAL_H
