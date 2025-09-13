@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/12 17:39:06 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/13 14:20:22 by rel-qoqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,11 @@ else ifeq ($(MODE), sanitize)
 	OBJ_DIR = obj_sanitize
 endif
 
-DS_FILES		= ds/hash_table_create.c ds/hash_table_delete.c ds/hash_table_destroy.c \
-					ds/hash_table_insert.c ds/hash_table_reset.c ds/hash_table_search.c \
-					ds/internal/hash_table_resize.c
+DS_FILES		= ds/hash_table/hash_table_init.c ds/hash_table/hash_table_delete.c \
+					ds/hash_table/hash_table_destroy.c ds/hash_table/hash_table_insert.c \
+					ds/hash_table/hash_table_reset.c ds/hash_table/hash_table_search.c \
+					ds/hash_table/internal/hash_table_resize.c \
+					ds/string_table/string_table_add.c ds/string_table/string_table_core.c
 SRC_FILES		= main.c $(DS_FILES)
 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
