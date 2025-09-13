@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 17:21:53 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/12 18:43:34 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/13 13:22:25 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ void	hash_table_destroy(t_hash_table *ht)
 		i++;
 	}
 	free(ht->table);
-	free(ht);
 }
