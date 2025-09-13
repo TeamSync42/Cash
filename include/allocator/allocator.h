@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 17:00:29 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:07:08 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ typedef struct s_arena {
 	char			data[ARENA_CAPACITY];
 }	t_arena;
 
-typedef struct s_slab_block {
+typedef struct s_slab_meta {
 	uint16_t	size;
 	bool		used;
 	char		reserved;
-}	t_slab_block;
+}	t_slab_meta;
 
 typedef struct s_slab_region {
 	struct s_slab_region	*next;

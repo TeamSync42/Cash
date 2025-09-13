@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   find.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 14:28:45 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 17:01:03 by smamalig         ###   ########.fr       */
+/*   Created: 2025/09/13 16:43:29 by smamalig          #+#    #+#             */
+/*   Updated: 2025/09/13 17:01:19 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "allocator/allocator.h"
 #include "allocator/allocator_internal.h"
 
-void	allocator_destroy(t_allocator *alc)
+t_arena	*allocator_arena_find(t_allocator *alc, t_arena_id id)
 {
-	void	*temp;
+	t_arena	*arena;
 	int		i;
 
+	if (id == 0)
+		return (NULL);
 	i = -1;
 	while (++i < STACK_ARENAS)
-		allocator_arena_destroy(alc, &alc->stack_arenas[i]);
-	while (alc->arenas)
 	{
-		temp = alc->arenas->next;
-		allocator_arena_destroy(alc, alc->arenas);
-		alc->arenas = temp;
+		if (alc->stack_arenas[i].id == id)
+			return (&alc->stack_arenas[i]);
 	}
-	while (alc->slabs)
+	arena = alc->arenas;
+	while (arena)
 	{
-		temp = alc->slabs->next;
-		allocator_slab_destroy(alc->slabs);
-		alc->slabs = temp;
+		if (arena->id == id)
+			return (arena);
 	}
+	return (NULL);
 }
