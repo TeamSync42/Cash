@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:23:57 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/13 13:19:30 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/13 13:47:28 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_hash_table {
 	size_t			item_count;
 }	t_hash_table;
 
-int32_t	hash_table_create(t_hash_table *ht);
+int32_t	hash_table_init(t_hash_table *ht);
 void	hash_table_destroy(t_hash_table *ht);
 int32_t	hash_table_insert(t_hash_table *ht, const char *cmd, const char *path);
 char	*hash_table_search(t_hash_table *ht, const char *cmd);

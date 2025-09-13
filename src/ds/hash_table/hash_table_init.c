@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_table_create.c                                :+:      :+:    :+:   */
+/*   hash_table_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 17:21:45 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/13 13:21:56 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/13 14:19:54 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define HASH_TABLE_INIT_SIZE 101
 
-int32_t	hash_table_create(t_hash_table *ht)
+int32_t	hash_table_init(t_hash_table *ht)
 {
 	ht->table_size = HASH_TABLE_INIT_SIZE;
 	ht->item_count = 0;
