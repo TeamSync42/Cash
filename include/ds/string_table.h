@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 05:51:44 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/13 13:47:46 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:18:52 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRING_TABLE_H
 
 # include <stdint.h>
+# include <stdlib.h>
 
 # define INITIAL_STRING_TABLE_CAPACITY 1024
 

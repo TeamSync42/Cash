@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 18:55:59 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:03:58 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,21 @@
 # ifndef STACK_SLABS
 #  define STACK_SLABS 12
 # endif
-# define MAX_SLAB_SIZE 512
-# define ARENA_CAPACITY 4076 // 4096 - 12 - 8
-# define SLAB_CAPACITY 4074 // 4096 - 10 - 8
+# ifndef MAX_SLAB_SIZE
+#  define MAX_SLAB_SIZE 512
+# endif
+
+# ifdef USE_HEAP
+
+#  define ARENA_CAPACITY 4076 // 4096 - 12 - 8 (malloc padding)
+#  define SLAB_CAPACITY 4074 // 4096 - 10 - 8 (malloc padding)
+
+# else
+
+#  define ARENA_CAPACITY 4084 // 4096 - 12
+#  define SLAB_CAPACITY 4082 // 4096 - 10
+
+# endif
 
 typedef uint16_t	t_arena_id;
 
@@ -79,7 +91,7 @@ void			allocator_init(t_allocator *alc);
 void			allocator_destroy(t_allocator *alc);
 
 t_arena			*allocator_arena_new(t_allocator *alc);
-void			allocator_bulk_free(t_allocator *alc, t_arena_id id);
+void			allocator_bulk_free(t_allocator *alc, t_arena *arena);
 
 t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena *arena);
 void			allocator_free(t_allocator *alc, t_allocation alloc);
