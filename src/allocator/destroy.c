@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 14:28:45 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/13 17:01:03 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 02:08:28 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	allocator_destroy(t_allocator *alc)
 	while (alc->slabs)
 	{
 		temp = alc->slabs->next;
-		allocator_slab_destroy(alc->slabs);
+		allocator_slab_destroy(alc, alc->slabs);
 		alc->slabs = temp;
 	}
 }
