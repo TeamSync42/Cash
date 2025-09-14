@@ -66,12 +66,13 @@ ARGS_FILES		= arguments/add.c arguments/destroy.c arguments/find.c \
 					arguments/get.c arguments/init.c arguments/internal/arguments_parse.c \
 					arguments/internal/parse_long.c arguments/internal/positional.c \
 					arguments/internal/parse_short.c
+BYTECODE_FILES	= bytecode/write.c
 DS_FILES		= ds/hash_table/hash_table_init.c ds/hash_table/hash_table_delete.c \
 					ds/hash_table/hash_table_destroy.c ds/hash_table/hash_table_insert.c \
 					ds/hash_table/hash_table_reset.c ds/hash_table/hash_table_search.c \
 					ds/hash_table/internal/hash_table_resize.c \
 					ds/string_table/string_table_add.c ds/string_table/string_table_core.c
-SRC_FILES		= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(DS_FILES)
+SRC_FILES		= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) $(DS_FILES)
 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
