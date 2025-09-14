@@ -126,7 +126,7 @@ and heap fallback for large allocations. Stack-only mode disables heap fallback.
 
 ### 5.2. Drawbacks
 
-- API complexity: Returning `t_allocation` insteada of raw `void *` adds indirection and requires callers to handle an
+- API complexity: Returning `t_allocation` instead of raw `void *` adds indirection and requires callers to handle an
   extra type.
 - Learning curve: Developers must understand arena vs slab semantics to avoid misuse
   (e.g., dangling arena pointers after reset)

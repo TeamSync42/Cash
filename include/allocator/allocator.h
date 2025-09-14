@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 14:58:31 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:04:26 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,17 @@ typedef struct s_allocation {
 
 typedef struct s_arena {
 	struct s_arena	*next;
-	uint16_t		used;
 	uint16_t		id;
+	uint16_t		used;
 	char			data[ARENA_CAPACITY];
 }	t_arena;
+
+typedef struct s_large_alloc {
+	struct s_arena	*next;
+	uint16_t		id;
+	char			reserved[6];
+	void			*data;
+}	t_large_alloc;
 
 typedef struct s_slab_meta {
 	uint16_t	size;
