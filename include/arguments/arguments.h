@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:01:08 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 10:00:08 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/14 10:24:51 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_argument
 	char		short_name;
 	bool		is_set;
 	bool		has_value;
+	char		padding[5];
 }	t_argument;
 
 typedef struct s_arguments
@@ -34,13 +35,12 @@ typedef struct s_arguments
 }	t_arguments;
 
 t_result	arguments_init(t_arguments *args, int argc, char **argv);
-void		arguments_destroy(t_arguments *args);
-t_argument	*arguments_find(t_arguments *args, const char *name);
-t_argument	*arguments_find_short(t_arguments *args, char name);
+void		arguments_destroy(const t_arguments *args);
+t_argument	*arguments_find(const t_arguments *args, const char *name);
+t_argument	*arguments_find_short(const t_arguments *args, char name);
 t_result	arguments_add(t_arguments *args, const char *long_name,
 				char short_name, bool has_value);
-t_result	__arguments_parse(t_arguments *args, int argc, char **argv);
-char		*arguments_get(t_arguments *args, const char *name);
-bool		arguments_is_set(t_arguments *args, const char *name);
+char		*arguments_get(const t_arguments *args, const char *name);
+bool		arguments_is_set(const t_arguments *args, const char *name);
 
 #endif // ARGUMENTS_H
