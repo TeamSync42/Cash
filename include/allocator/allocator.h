@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 13:30:56 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 14:58:31 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void			allocator_init(t_allocator *alc);
 void			allocator_destroy(t_allocator *alc);
 
 t_arena			*allocator_arena_new(t_allocator *alc);
-void			allocator_bulk_free(t_allocator *alc, t_arena_id id);
+void			allocator_bulk_free(t_allocator *alc, t_arena *arena);
 
 t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena *arena);
 void			allocator_free(t_allocator *alc, t_allocation alloc);
