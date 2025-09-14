@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:44:54 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 00:01:16 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:43:48 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ t_allocation	allocator_arena_alloc(
 		return (allocator_arena_alloc(alc, arena->next, size));
 	}
 	alloc.data = arena->data + arena->used;
-	arena->used += size;
+	arena->used += (uint16_t)size;
 	return (alloc);
 }

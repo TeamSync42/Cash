@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:27:42 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 00:33:48 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:44:10 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	allocator_slab_assign(t_slab_region *slab, t_allocation *alloc)
 	meta->used = true;
 	meta->size = (uint16_t)alloc->size;
 	alloc->data = slab->data + slab->used + sizeof(t_slab_meta);
-	slab->used += alloc->size + sizeof(t_slab_meta);
+	slab->used += (uint16_t)(alloc->size + sizeof(t_slab_meta));
 	return ;
 }
 
