@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 17:22:12 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/15 15:16:32 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:33:49 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int32_t	hash_table_delete(t_hash_table *ht, const char *cmd)
 			ht->table[i].cmd_name = TOMBSTONE;
 			if (ht->item_count > 0)
 				ht->item_count--;
+			ht->tombstone_count++;
 			return (0);
 		}
 		i = (i + 1) % ht->table_size;

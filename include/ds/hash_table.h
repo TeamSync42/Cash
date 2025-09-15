@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:23:57 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/13 13:47:28 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:32:38 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_hash_table {
 	t_hash_entry	*table;
 	size_t			table_size;
 	size_t			item_count;
+	size_t			tombstone_count;
 }	t_hash_table;
 
 int32_t	hash_table_init(t_hash_table *ht);

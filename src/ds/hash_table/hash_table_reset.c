@@ -6,7 +6,7 @@
 /*   By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 17:22:16 by rel-qoqu          #+#    #+#             */
-/*   Updated: 2025/09/12 18:58:26 by rel-qoqu         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:34:06 by rel-qoqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	hash_table_reset(t_hash_table *ht)
 		i++;
 	}
 	ht->item_count = 0;
+	ht->tombstone_count = 0;
 }
