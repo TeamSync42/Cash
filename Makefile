@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/15 14:14:54 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/15 15:05:51 by rel-qoqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,14 @@ endif
 
 GTEST_CFLAGS		:= $(shell pkg-config --cflags gtest gmock 2>/dev/null)
 GTEST_LIBS			:= $(shell pkg-config --libs gtest gmock 2>/dev/null)
-ifeq ($(GTEST_LIBS),)
+GTEST_MAIN_LIBS		:= $(shell pkg-config --libs gtest_main gmock_main 2>/dev/null)
+ifneq ($(strip $(GTEST_MAIN_LIBS)),)
+GTEST_LIBS          += $(GTEST_MAIN_LIBS)
+endif
+ifeq ($(strip $(GTEST_LIBS)),)
 	GTEST_LIBS = -lgtest -lgtest_main -lgmock -lgmock_main -pthread
 endif
+
 
 CXX_FLAGS			+= $(INC_FLAGS) $(GTEST_CFLAGS)
 
@@ -86,17 +91,23 @@ SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 DEPS			= $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRCS))
 
-TEST_SRCS		:= $(shell find $(TEST_DIR) -type f -name '*.cpp' 2>/dev/null)
+MAIN_FILE		= main.c
+MAIN_SRC		= $(addprefix $(SRC_DIR)/,$(MAIN_FILE))
+MAIN_OBJ		= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(MAIN_SRC))
+OBJS_NO_MAIN	= $(filter-out $(MAIN_OBJ), $(OBJS))
+
+TEST_FILES		= hash_table_tests.cpp
+TEST_SRCS		:= $(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS		:= $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(TEST_SRCS))
-TEST_BIN		:= tests
+TEST_BIN		:= unit_tests
 
 all: $(NAME)
 
 $(NAME): $(LIBFT_A) $(OBJS)
 	$(CC) $(C_FLAGS) $(OBJS) $(RL_LIBS) $(LIBFT_A) -o $(NAME)
 
-$(TEST_BIN): $(LIBFT_A)) $(OBJS) $(TEST_OBJS)
-	$(CXX) $(CXX_FLAGS) $(TEST_OBJS) $(OBJS) $(RL_LIBS) $(LIBFT_A) $(GTEST_LIBS) -o $(TEST_BIN)
+$(TEST_BIN): $(LIBFT_A) $(OBJS_NO_MAIN) $(TEST_OBJS)
+	$(CXX) $(CXX_FLAGS) $(TEST_OBJS) $(OBJS_NO_MAIN) $(RL_LIBS) $(LIBFT_A) $(GTEST_LIBS) -o $(TEST_BIN)
 
 ifeq ($(MODE), debug)
 $(LIBFT_A):
@@ -120,6 +131,7 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 clean:
 	@rm -rf $(DEP_DIR)
 	@rm -rf $(OBJ_DIR)*
+	@rm -f $(TEST_BIN)
 	$(MAKE) -C $(LIBS_DIR)/libft clean
 
 fclean: clean
