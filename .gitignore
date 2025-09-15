@@ -38,3 +38,4 @@ dkms.conf
 .vscode/
 .cache/
 minishell*
+unit_tests*
