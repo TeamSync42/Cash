@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/14 12:02:58 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/15 14:14:54 by rel-qoqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,14 @@ RL_LIBS				:= $(shell pkg-config --libs readline 2>/dev/null)
 ifeq ($(RL_LIBS),)
 	RL_LIBS	= -lreadline
 endif
+
+GTEST_CFLAGS		:= $(shell pkg-config --cflags gtest gmock 2>/dev/null)
+GTEST_LIBS			:= $(shell pkg-config --libs gtest gmock 2>/dev/null)
+ifeq ($(GTEST_LIBS),)
+	GTEST_LIBS = -lgtest -lgtest_main -lgmock -lgmock_main -pthread
+endif
+
+CXX_FLAGS			+= $(INC_FLAGS) $(GTEST_CFLAGS)
 
 MODE				:= release
 ifeq ($(MODE), release)
@@ -78,10 +86,17 @@ SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 DEPS			= $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRCS))
 
+TEST_SRCS		:= $(shell find $(TEST_DIR) -type f -name '*.cpp' 2>/dev/null)
+TEST_OBJS		:= $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(TEST_SRCS))
+TEST_BIN		:= tests
+
 all: $(NAME)
 
 $(NAME): $(LIBFT_A) $(OBJS)
 	$(CC) $(C_FLAGS) $(OBJS) $(RL_LIBS) $(LIBFT_A) -o $(NAME)
+
+$(TEST_BIN): $(LIBFT_A)) $(OBJS) $(TEST_OBJS)
+	$(CXX) $(CXX_FLAGS) $(TEST_OBJS) $(OBJS) $(RL_LIBS) $(LIBFT_A) $(GTEST_LIBS) -o $(TEST_BIN)
 
 ifeq ($(MODE), debug)
 $(LIBFT_A):
@@ -100,7 +115,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 	@mkdir -p $(@D)
-	$(CC) $(C_FLAGS) -c $< -o $@
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(DEP_DIR)
@@ -123,16 +138,16 @@ norm:
 	@norminette $(INC_DIR)
 	@norminette $(SRC_DIR)
 
-tests:
-	@echo "OK"
+tests: $(TEST_BIN)
+	@echo "Tests build OK: ./$(TEST_BIN)"
 
-test:
+test: $(TEST_BIN)
 	@if [ -n "$(FILTER)" ]; then \
-  		echo "Running tests matching: $(FILTER)"; \
-  	else \
-		echo "Please specify FILTER=pattern"; \
-		echo "Example: make test FILTER='*lexer*'"; \
-		exit 42; \
+		echo "Running tests matching: $(FILTER)"; \
+		./$(TEST_BIN) --gtest_filter="$(FILTER)"; \
+	else \
+		echo "Running all tests"; \
+		./$(TEST_BIN); \
 	fi
 
 .PHONY: all clean fclean re debug sanitize norm tests test
