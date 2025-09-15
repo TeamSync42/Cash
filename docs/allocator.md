@@ -32,14 +32,14 @@ Goals:
 2. Slab allocations:
 
   - For frequently allocated small objects with variable lifetimes and for allocations that must be individually freed.
-  - Size classes up to `MAX_SLAB_SIZE` (tunable at build time) with per-class freelists and slab metadata.
-  - Requirement: `MAX_SLAB_SIZE` must never exceed `SLAB_CAPACITY - sizeof(t_slab_meta)`.
+  - Size classes up to `MAX_ALLOC_SIZE` (tunable at build time) with per-class freelists and slab metadata.
+  - Requirement: `MAX_ALLOC_SIZE` must never exceed `SLAB_CAPACITY - sizeof(t_slab_meta)`.
   - Slabs are allowed to live on the heap and be individually freed; `allocator_free(alloc)` returns the slot to the
     slab pool.
 
 3. System fallback (heap)
 
-  - For allocations larger than `MAX_SLAB_SIZE` or when slab/backing pools are exhausted, fall back to standard heap
+  - For allocations larger than `MAX_ALLOC_SIZE` or when slab/backing pools are exhausted, fall back to standard heap
     allocation.
   - If the binary is built in a stack-only (no-heap) configuration, the fallback to heap is disabled and such
     allocations fail with a clear error.
@@ -47,7 +47,7 @@ Goals:
 ### 2.2. Configuration
 
 - Compile-time constants define arena and slab counts (e.g. `STACK_ARENAS`, `STACK_SLABS`).
-- `MAX_SLAB_SIZE` must not exceed `SLAB_CAPACITY - sizeof(t_slab_meta)`.
+- `MAX_ALLOC_SIZE` must not exceed `SLAB_CAPACITY - sizeof(t_slab_meta)`.
 - `ARENA_CAPACITY` is internally page-size aligned and not user-tunable; counts are tunable instead.
 
 ### 2.3. Ownership Rules
@@ -109,8 +109,8 @@ and heap fallback for large allocations. Stack-only mode disables heap fallback.
 1. Request enters via `allocator_alloc()`.
 2. If an `arena` pointer is provided, attempt `arena` allocation, move bump pointer and return `t_allocation` with
   type `ALLOC_ARENA`
-3. If size <= `MAX_SLAB_SIZE`, attempt slab allocation. Return `t_allocation` with type `ALLOC_SLAB`
-4. If size > `MAX_SLAB_SIZE`, use heap allocation unless stack-only mode is active.
+3. If size <= `MAX_ALLOC_SIZE`, attempt slab allocation. Return `t_allocation` with type `ALLOC_SLAB`
+4. If size > `MAX_ALLOC_SIZE`, use heap allocation unless stack-only mode is active.
 
 -----
 
