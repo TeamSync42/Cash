@@ -6,37 +6,78 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:44:54 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 13:43:48 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:38:53 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "allocator/allocator.h"
 #include "allocator/allocator_internal.h"
+#include <assert.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+static t_allocation	large_alloc(t_arena *arena, size_t size)
+{
+	t_large_alloc	*large;
+	t_allocation	alloc;
+	size_t			total_size;
+
+	total_size = sizeof(t_large_alloc) + size;
+	alloc.data = NULL;
+	large = malloc(total_size);
+	if (!large)
+		return (alloc);
+	large->id = arena->id | ARENA_FLAG_LARGE;
+	large->data = (void *)((char *)large + sizeof(t_large_alloc));
+	large->next = arena->next;
+	arena->next = (void *)large;
+	alloc.kind = ALLOC_ARENA;
+	alloc.size = size;
+	alloc.parent_id = arena->id;
+	alloc.region = (void *)large;
+	return (alloc);
+}
+
+static t_arena	*find_arena(t_allocator *alc, t_arena *arena, size_t size)
+{
+	t_arena	*candidate;
+
+	candidate = arena;
+	while (candidate)
+	{
+		if (real_arena_id(candidate) != arena->id)
+			break ;
+		if (is_arena(candidate) && candidate->used + size <= ARENA_CAPACITY)
+			return (candidate);
+		candidate = candidate->next;
+	}
+	candidate = allocator_arena_create(alc);
+	if (!candidate)
+		return (NULL);
+	candidate->next = arena->next;
+	arena->next = candidate;
+	return (candidate);
+}
 
 t_allocation	allocator_arena_alloc(
 	t_allocator *alc, t_arena *arena, size_t size)
 {
 	t_allocation	alloc;
-	t_arena			*temp;
+	size_t			real_size;
 
+	if (size > MAX_ALLOC_SIZE)
+		return (large_alloc(arena, size));
+	real_size = (size + 7) & ~7LU;
 	alloc.kind = ALLOC_ARENA;
 	alloc.parent_id = arena->id;
-	alloc.size = size;
-	alloc.region = arena;
+	alloc.size = real_size;
 	alloc.data = NULL;
-	if (arena->used + size > ARENA_CAPACITY)
-	{
-		temp = arena->next;
-		arena->next = allocator_arena_create(alc);
-		if (!arena->next)
-		{
-			arena->next = temp;
-			return (alloc);
-		}
-		arena->next->next = temp;
-		return (allocator_arena_alloc(alc, arena->next, size));
-	}
+	arena = find_arena(alc, arena, real_size);
+	if (!arena)
+		return (alloc);
+	alloc.region = arena;
 	alloc.data = arena->data + arena->used;
-	arena->used += (uint16_t)size;
+	arena->used += (uint16_t)real_size;
 	return (alloc);
 }

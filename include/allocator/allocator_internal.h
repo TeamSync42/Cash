@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:55 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 16:45:04 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:22:43 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 inline bool	is_large_alloc(t_arena *arena)
 {
 	return (arena->id & ARENA_FLAG_LARGE);
+}
+
+inline bool	is_arena(t_arena *arena)
+{
+	return (!(arena->id & ARENA_FLAG_LARGE));
 }
 
 inline bool	is_arena_active(t_arena *arena)
