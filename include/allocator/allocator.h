@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:04 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/14 16:54:59 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:06:55 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,6 @@ typedef struct s_large_alloc
 	char			reserved[4];
 	void			*data;
 }	t_large_alloc;
-
-typedef struct s_slab_meta
-{
-	uint16_t	size;
-	bool		used;
-	char		reserved;
-}	t_slab_meta;
 
 typedef struct s_slab_region
 {

@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/15 15:05:51 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/23 15:10:30 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ ifeq ($(strip $(GTEST_LIBS)),)
 	GTEST_LIBS = -lgtest -lgtest_main -lgmock -lgmock_main -pthread
 endif
 
-
 CXX_FLAGS			+= $(INC_FLAGS) $(GTEST_CFLAGS)
 
 MODE				:= release
@@ -70,26 +69,24 @@ else ifeq ($(MODE), sanitize)
 	OBJ_DIR = obj_sanitize
 endif
 
-ALLOCATOR_FILES	= allocator/init.c allocator/destroy.c allocator/alloc.c \
-					allocator/arena/new.c allocator/arena/create.c \
-					allocator/arena/destroy.c allocator/arena/find.c \
-					allocator/arena/alloc.c allocator/slab/alloc.c \
-					allocator/slab/destroy.c allocator/slab/create.c
-ARGS_FILES		= arguments/add.c arguments/destroy.c arguments/find.c \
-					arguments/get.c arguments/init.c arguments/internal/arguments_parse.c \
-					arguments/internal/parse_long.c arguments/internal/positional.c \
-					arguments/internal/parse_short.c
-BYTECODE_FILES	= bytecode/write.c
+ALLOCATOR_FILES	:= $(addprefix allocator/, init.c destroy.c alloc.c free.c \
+					arena/alloc.c arena/free.c arena/new.c arena/create.c \
+					arena/destroy.c arena/find.c \
+					slab/alloc.c slab/free.c slab/create.c slab/destroy.c)
+ARGS_FILES		:= $(addprefix arguments/, add.c destroy.c find.c get.c init.c \
+					internal/arguments_parse.c internal/parse_long.c internal/positional.c \
+					internal/parse_short.c)
+BYTECODE_FILES	:= bytecode/write.c
 DS_FILES		= ds/hash_table/hash_table_init.c ds/hash_table/hash_table_delete.c \
 					ds/hash_table/hash_table_destroy.c ds/hash_table/hash_table_insert.c \
 					ds/hash_table/hash_table_reset.c ds/hash_table/hash_table_search.c \
 					ds/hash_table/internal/hash_table_resize.c \
 					ds/string_table/string_table_add.c ds/string_table/string_table_core.c
-SRC_FILES		= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) $(DS_FILES)
+SRC_FILES		:= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) $(DS_FILES)
 
-SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-DEPS			= $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRCS))
+SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS			:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+DEPS			:= $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRCS))
 
 MAIN_FILE		= main.c
 MAIN_SRC		= $(addprefix $(SRC_DIR)/,$(MAIN_FILE))
