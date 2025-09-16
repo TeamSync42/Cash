@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alloc.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 14:10:44 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/15 15:00:21 by smamalig         ###   ########.fr       */
+/*   Created: 2025/09/14 16:13:50 by smamalig          #+#    #+#             */
+/*   Updated: 2025/09/16 15:51:59 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "allocator/allocator.h"
 #include "allocator/allocator_internal.h"
 #include <stdlib.h>
-#include <assert.h>
 
-t_allocation	allocator_alloc(t_allocator *alc, size_t size, t_arena *arena)
+void	allocator_arena_free(t_allocator *alc, t_arena *arena)
 {
-	t_allocation	alloc;
+	t_arena	*temp;
+	t_arena	*prev;
 
-	if (arena)
-		return (allocator_arena_alloc(alc, arena, size));
-	if (size <= MAX_ALLOC_SIZE)
-		return (allocator_slab_alloc(alc, size));
-	alloc.size = size;
-	alloc.kind = ALLOC_HEAP;
-	alloc.data = malloc(size);
-	alloc.parent_id = 0;
-	alloc.region = NULL;
-	return (alloc);
+	(void)alc;
+	prev = arena;
+	while (arena)
+	{
+		temp = arena->next;
+		if (!is_arena(arena))
+		{
+			free(arena);
+			prev->next = temp;
+			arena = temp;
+			continue ;
+		}
+		arena->used = 0;
+		arena->id &= (uint16_t)(~ARENA_FLAG_ACTIVE);
+		prev = arena;
+		arena = temp;
+	}
 }

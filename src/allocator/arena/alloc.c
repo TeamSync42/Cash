@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:44:54 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/15 11:38:53 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:25:40 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static t_arena	*find_arena(t_allocator *alc, t_arena *arena, size_t size)
 		return (NULL);
 	candidate->next = arena->next;
 	arena->next = candidate;
+	candidate->id = arena->id;
+	candidate->used = 0;
 	return (candidate);
 }
 

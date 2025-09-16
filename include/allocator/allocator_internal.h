@@ -6,7 +6,7 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 10:07:55 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/15 11:22:43 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:58:01 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 # define ARENA_FLAG_LARGE 0x8000
 # define ARENA_FLAG_ACTIVE 0x4000
 # define ARENA_ID_MASK 0x3fff
-
-inline bool	is_large_alloc(t_arena *arena)
-{
-	return (arena->id & ARENA_FLAG_LARGE);
-}
 
 inline bool	is_arena(t_arena *arena)
 {
