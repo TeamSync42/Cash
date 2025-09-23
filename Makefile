@@ -6,7 +6,7 @@
 #    By: rel-qoqu <rel-qoqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/12 13:28:44 by rel-qoqu          #+#    #+#              #
-#    Updated: 2025/09/15 15:05:51 by rel-qoqu         ###   ########.fr        #
+#    Updated: 2025/09/19 16:35:54 by smamalig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,13 +79,18 @@ ARGS_FILES		= arguments/add.c arguments/destroy.c arguments/find.c \
 					arguments/get.c arguments/init.c arguments/internal/arguments_parse.c \
 					arguments/internal/parse_long.c arguments/internal/positional.c \
 					arguments/internal/parse_short.c
+LEXER_FILES		:= $(addprefix lexer/, advance.c comment.c delim.c dollar.c \
+					eof.c error.c group.c init.c internal.c letter_e.c letter_i.c \
+					letter_t.c letter_w.c number.c pipe.c print.c quote.c redir.c \
+					word.c amp.c)
 BYTECODE_FILES	= bytecode/write.c
 DS_FILES		= ds/hash_table/hash_table_init.c ds/hash_table/hash_table_delete.c \
 					ds/hash_table/hash_table_destroy.c ds/hash_table/hash_table_insert.c \
 					ds/hash_table/hash_table_reset.c ds/hash_table/hash_table_search.c \
 					ds/hash_table/internal/hash_table_resize.c \
 					ds/string_table/string_table_add.c ds/string_table/string_table_core.c
-SRC_FILES		= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) $(DS_FILES)
+SRC_FILES		= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) \
+					$(DS_FILES) $(LEXER_FILES)
 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))

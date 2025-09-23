@@ -6,11 +6,12 @@
 /*   By: smamalig <smamalig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:11:59 by smamalig          #+#    #+#             */
-/*   Updated: 2025/09/19 16:12:20 by smamalig         ###   ########.fr       */
+/*   Updated: 2025/09/19 16:34:03 by smamalig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer/lexer_internal.h"
+#include "io/ft_printf.h"
 
 #define KEY0 "\x1b[94m"
 #define KEY1 "\x1b[96m"
@@ -32,14 +33,14 @@ static const char *get_data(t_token t)
 
 void	print_token(t_token token)
 {
-	printf(ITALIC GREY"Token"CLEAR" ");
-	printf("<"TEXT"%s"CLEAR"> ", get_data(token));
-	printf("{"KEY0" type"CLEAR": ");
-	printf(VALUE"%i"CLEAR","KEY0" pos"CLEAR": {"KEY1" line"CLEAR": ",
+	ft_printf(ITALIC GREY"Token"CLEAR" ");
+	ft_printf("<"TEXT"%s"CLEAR"> ", get_data(token));
+	ft_printf("{"KEY0" type"CLEAR": ");
+	ft_printf(VALUE"%i"CLEAR","KEY0" pos"CLEAR": {"KEY1" line"CLEAR": ",
 		token.type);
-	printf(VALUE"%i"CLEAR","KEY1" start"CLEAR": ", token.pos.line);
-	printf(VALUE"%i"CLEAR","KEY1" end"CLEAR": ", token.pos.start);
-	printf(VALUE"%i"CLEAR","KEY1" absStart"CLEAR": ", token.pos.end);
-	printf(VALUE"%i"CLEAR","KEY1" absEnd"CLEAR": ", token.pos.abs_start);
-	printf(VALUE"%i"CLEAR" }\n", token.pos.abs_end);
+	ft_printf(VALUE"%i"CLEAR","KEY1" start"CLEAR": ", token.pos.line);
+	ft_printf(VALUE"%i"CLEAR","KEY1" end"CLEAR": ", token.pos.start);
+	ft_printf(VALUE"%i"CLEAR","KEY1" absStart"CLEAR": ", token.pos.end);
+	ft_printf(VALUE"%i"CLEAR","KEY1" absEnd"CLEAR": ", token.pos.abs_start);
+	ft_printf(VALUE"%i"CLEAR" }\n", token.pos.abs_end);
 }
