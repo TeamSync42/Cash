@@ -77,11 +77,11 @@ ARGS_FILES		:= $(addprefix arguments/, add.c destroy.c find.c get.c init.c \
 					internal/arguments_parse.c internal/parse_long.c internal/positional.c \
 					internal/parse_short.c)
 BYTECODE_FILES	:= bytecode/write.c
-DS_FILES		= ds/hash_table/hash_table_init.c ds/hash_table/hash_table_delete.c \
-					ds/hash_table/hash_table_destroy.c ds/hash_table/hash_table_insert.c \
-					ds/hash_table/hash_table_reset.c ds/hash_table/hash_table_search.c \
-					ds/hash_table/internal/hash_table_resize.c \
-					ds/string_table/string_table_add.c ds/string_table/string_table_core.c
+HT_FILES		:= $(addprefix hash_table/, hash_table_init.c hash_table_delete.c \
+					hash_table_destroy.c hash_table_insert.c hash_table_reset.c \
+					hash_table_search.c internal/hash_table_resize.c)
+STR_FILES		:= $(addprefix string_table/, string_table_add.c string_table_core.c)
+DS_FILES		:= $(addprefix ds/, $(HT_FILES) $(STR_FILES))
 SRC_FILES		:= main.c $(ALLOCATOR_FILES) $(ARGS_FILES) $(BYTECODE_FILES) $(DS_FILES)
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
